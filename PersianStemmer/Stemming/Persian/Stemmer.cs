@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -10,7 +11,7 @@ namespace Stemming.Persian
     {
         //private static readonly ILog log = LogManager.GetLogger(typeof(Stemmer));
 
-        private readonly Trie<int> _lexicon;
+        private readonly Trie<int> _lexicons;
         private readonly Trie<string> _mokassarDic;
         private readonly Trie<Verb> _verbDic;
         private readonly List<Rule> _ruleList;
@@ -30,7 +31,7 @@ namespace Stemming.Persian
         public Stemmer(List<Rule> rules = null, Trie<int> lexicons = null, Trie<string> mokassarDic = null, Trie<Verb> verbDic = null)
         {
             _ruleList = rules ?? new List<Rule>();
-            _lexicon = lexicons ?? new Trie<int>();
+            _lexicons = lexicons ?? new Trie<int>();
             _mokassarDic = mokassarDic ?? new Trie<string>();
             if (_enableVerb)
                 _verbDic = verbDic;
@@ -40,33 +41,33 @@ namespace Stemming.Persian
 
         private string Normalize(string s)
         {
-            StringBuilder newString = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < s.Length; i++)
             {
                 switch (s[i])
                 {
                     case 'ي':
-                        newString.Append('ی');
+                        sb.Append('ی');
                         break;
                     //case 'ة':
                     case 'ۀ':
-                        newString.Append('ه');
+                        sb.Append('ه');
                         break;
                     case '‌':
-                        newString.Append(' ');
+                        sb.Append(' ');
                         break;
                     case '‏':
-                        newString.Append(' ');
+                        sb.Append(' ');
                         break;
                     case 'ك':
-                        newString.Append('ک');
+                        sb.Append('ک');
                         break;
                     case 'ؤ':
-                        newString.Append('و');
+                        sb.Append('و');
                         break;
                     case 'إ':
                     case 'أ':
-                        newString.Append('ا');
+                        sb.Append('ا');
                         break;
                     case '\u064B': //FATHATAN
                     case '\u064C': //DAMMATAN
@@ -78,17 +79,17 @@ namespace Stemming.Persian
                     case '\u0652': //SUKUN
                         break;
                     default:
-                        newString.Append(s[i]);
+                        sb.Append(s[i]);
                         break;
                 }
             }
-            return newString.ToString();
+            return sb.ToString();
 
         }
 
-        private bool Validate(string sWord)
+        private bool Validate(string word)
         {
-            return _lexicon.Contains(sWord);
+            return _lexicons.Contains(word);
         }
 
         private string IsMokassar(string input, bool state)
@@ -102,40 +103,32 @@ namespace Stemming.Persian
 
         private string GetMokassarStem(string word)
         {
-            string temp = _mokassarDic.ContainsKey(word);
-            if (string.IsNullOrEmpty(temp))
-            {
-                string newWord = IsMokassar(word, true);
-                temp = _mokassarDic.ContainsKey(newWord);
-                if (string.IsNullOrEmpty(temp))
-                {
-                    newWord = IsMokassar(word, false);
-                    temp = _mokassarDic.ContainsKey(newWord);
-                    if (!string.IsNullOrEmpty(temp))
-                        return temp;
-                }
-                else
-                {
-                    return temp;
-                }
-            }
-            else
-            {
+            string temp = _mokassarDic.GetKey(word);
+            if (!string.IsNullOrEmpty(temp))
                 return temp;
-            }
+
+            string newWord = IsMokassar(word, true);
+            temp = _mokassarDic.GetKey(newWord);
+            if (!string.IsNullOrEmpty(temp))
+                return temp;
+
+            newWord = IsMokassar(word, false);
+            temp = _mokassarDic.GetKey(newWord);
+            if (!string.IsNullOrEmpty(temp))
+                return temp;
 
             return "";
         }
 
         private string ValidateVerb(string word)
         {
-            if (word.IndexOf(' ') > -1)
+            if (word.Contains(' '))
                 return "";
 
             for (int j = 0; j < _verbAffixes.Length; j++)
             {
                 string temp = "";
-                if (j == 0 && (word[word.Length - 1] == 'ا' || word[word.Length - 1] == 'و'))
+                if (j == 0 && (word.Last() == 'ا' || word.Last() == 'و'))
                 {
                     temp = _verbAffixes[j].Replace("*", word + "ی");
                 }
@@ -158,10 +151,10 @@ namespace Stemming.Persian
 
         private string GetPrefix(string word)
         {
-            foreach (string sPrefix in _prefixes)
+            foreach (string prefix in _prefixes)
             {
-                if (word.StartsWith(sPrefix))
-                    return sPrefix;
+                if (word.StartsWith(prefix))
+                    return prefix;
             }
 
             return "";
@@ -169,10 +162,10 @@ namespace Stemming.Persian
 
         private string GetPrefixException(string word)
         {
-            foreach (string sPrefix in Stemmer._prefixException)
+            foreach (string prefix in _prefixException)
             {
-                if (word.StartsWith(sPrefix))
-                    return sPrefix;
+                if (word.StartsWith(prefix))
+                    return prefix;
             }
 
             return "";
@@ -180,10 +173,10 @@ namespace Stemming.Persian
 
         private string GetSuffix(string word)
         {
-            foreach (string sSuffix in _suffixes)
+            foreach (string suffix in _suffixes)
             {
-                if (word.EndsWith(sSuffix))
-                    return sSuffix;
+                if (word.EndsWith(suffix))
+                    return suffix;
             }
 
             return "";
@@ -239,13 +232,13 @@ namespace Stemming.Persian
 
             if (!result)
             {
-                string sPrefix = GetPrefix(word);
-                if (!string.IsNullOrEmpty(sPrefix))
+                string prefix = GetPrefix(word);
+                if (!string.IsNullOrEmpty(prefix))
                 {
-                    if (word.StartsWith(sPrefix + " "))
-                        result = Validate(word.Replace(sPrefix + " ", sPrefix));
+                    if (word.StartsWith(prefix + " "))
+                        result = Validate(word.Replace(prefix + " ", prefix));
                     else
-                        result = Validate(word.Replace(sPrefix, sPrefix + " "));
+                        result = Validate(word.Replace(prefix, prefix + " "));
                 }
             }
 
@@ -396,7 +389,7 @@ namespace Stemming.Persian
 
             if (_enableCache)
             {
-                var stm = _cache.ContainsKey(input);
+                var stm = _cache.GetKey(input);
                 if (!string.IsNullOrEmpty(stm))
                     return stm;
             }
@@ -448,7 +441,7 @@ namespace Stemming.Persian
                 return NounValidation(stemList);
             }
 
-            const int I = 0;
+            const int ind = 0;
             if (_patternCount != 0)
             {
                 if (_patternCount < 0)
@@ -456,9 +449,9 @@ namespace Stemming.Persian
                 else
                     stemList.Sort();
 
-                while (I < stemList.Count && (stemList.Count > Math.Abs(_patternCount)))
+                while (ind < stemList.Count && (stemList.Count > Math.Abs(_patternCount)))
                 {
-                    stemList.RemoveAt(I);
+                    stemList.RemoveAt(ind);
                     //patternList.remove(I);
                 }
             }

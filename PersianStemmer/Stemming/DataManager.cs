@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PersianStemmer.Stemming
 {
-    internal class DataManager
+    public class DataManager
     {
         private const string PATTERN_FILE_NAME = "Patterns.fa";
         private const string VERB_FILE_NAME = "VerbList.fa";

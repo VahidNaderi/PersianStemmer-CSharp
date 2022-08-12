@@ -132,7 +132,7 @@ namespace Stemming
             return node;
         }
 
-        public TValue ContainsKey(string s_in)
+        public TValue GetKey(string s_in)
         {
             TrieNodeBase<TValue> node = FindNode(s_in);
             if (node == null || !node.HasValue)

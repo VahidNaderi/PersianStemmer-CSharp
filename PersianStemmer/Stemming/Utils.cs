@@ -20,25 +20,21 @@ namespace Stemming
 
         public static bool IsAdvanceQuery(string input)
         {
-            //return input.matches(".*[+:-].*");
             return Regex.IsMatch(input, ".*[+:-].*");
         }
 
         public static bool IsPhraseQuery(string input)
         {
-            //return input.matches("\".+\"");
             return Regex.IsMatch(input, "\".+\"");
         }
 
         public static bool IsEnglish(string input)
         {
-            //return input.matches("[a-z,:/`;'\\?A-Z *+~!@#=\\[\\]{}\\$%^&*().0-9]+");
             return Regex.IsMatch(input, "[a-z,:/`;'\\?A-Z*+~!@#=\\[\\]{}\\$%^&*().0-9]+");
         }
 
         public static bool IsNumber(string input)
         {
-            //return input.matches("[0-9,.]+");
             return Regex.IsMatch(input, "[0-9,.]+"); // what about "^[-+]?[0-9]*\.?[0-9]*$"   ?
         }
 
@@ -48,10 +44,5 @@ namespace Stemming
             char[] delimiters = new char[] { ' ', '\r', '\n' };
             return input.Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
         }
-
-        //public static BufferedReader getBufferedReader(Reader reader)
-        //{
-        //    return (reader is BufferedReader) ? (BufferedReader)reader : new BufferedReader(reader);
-        //}
     }
 }
