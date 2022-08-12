@@ -1,4 +1,13 @@
-D:\Development\Windows\Others\PersianStemmer-CSharp\PersianStemmer\bin\Debug\PersianStemmer.exe
-D:\Development\Windows\Others\PersianStemmer-CSharp\PersianStemmer\bin\Debug\PersianStemmer.pdb
-D:\Development\Windows\Others\PersianStemmer-CSharp\PersianStemmer\obj\Debug\PersianStemmer.exe
-D:\Development\Windows\Others\PersianStemmer-CSharp\PersianStemmer\obj\Debug\PersianStemmer.pdb
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\PersianStemmer.exe.config
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\PersianStemmer.exe
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\PersianStemmer.pdb
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\obj\Debug\PersianStemmer.csproj.AssemblyReference.cache
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\obj\Debug\PersianStemmer.csproj.SuggestedBindingRedirects.cache
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\obj\Debug\PersianStemmer.csproj.CoreCompileInputs.cache
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\obj\Debug\PersianStemmer.exe
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\obj\Debug\PersianStemmer.pdb
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\Resources\Dictionary.ar
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\Resources\Dictionary.fa
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\Resources\Mokassar.fa
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\Resources\Patterns.fa
+C:\DevProjects\lunr-extra\PersianStemmer-CSharp\PersianStemmer\bin\Debug\Resources\VerbList.fa

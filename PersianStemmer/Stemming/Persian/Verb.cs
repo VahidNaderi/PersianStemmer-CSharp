@@ -2,31 +2,15 @@ namespace Stemming.Persian
 {
     public class Verb
     {
+        public string Present { get; set; }
+        public string Past { get; set; }
 
-        public Verb(string sPast, string sPresent)
+        public Verb(string past, string present)
         {
-            this.setPresent(sPresent);
-            this.setPast(sPast);
+            this.Present = present;
+            this.Past = past;
 
-        }
-        private string present;
-        public string getPresent()
-        {
-            return present;
-        }
-        public void setPresent(string value)
-        {
-            present = value;
         }
 
-        private string past;
-        public string getPast()
-        {
-            return past;
-        }
-        public void setPast(string value)
-        {
-            past = value;
-        }
     }
 }

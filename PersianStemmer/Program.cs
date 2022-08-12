@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using PersianStemmer.Stemming;
 using Stemming.Persian;
+using System;
 
 namespace PersianStemmer
 {
@@ -10,9 +8,10 @@ namespace PersianStemmer
     {
         static void Main(string[] args)
         {
-            var ps = new Stemmer();
+            var dataManager = new DataManager();
+            var ps = new Stemmer(dataManager.LoadRules(), dataManager.LoadLexicon(), dataManager.LoadMokassarDic(), dataManager.LoadVerbDic());
             //Console.WriteLine(ps.run("زیباست"));
-            Console.WriteLine(ps.run("پدران"));
+            Console.WriteLine(ps.Run("پدران"));
 
             Console.ReadKey();
         }

@@ -2,64 +2,19 @@ namespace Stemming.Persian
 {
     public class Rule
     {
+        public string Body { get; set; }
+        public string Substitution { get; set; }
+        public char PoS { get; set; }
+        public byte MinLength { get; set; }
+        public bool State { get; set; }
 
-        public Rule(string sBody, string sSubstitution, char sPoS, byte iMinLength, bool bState)
+        public Rule(string body, string substitution, char poS, byte minLength, bool state)
         {
-            this.setBody(sBody);
-            this.setSubstitution(sSubstitution);
-            this.setPoS(sPoS);
-            this.setMinLength(iMinLength);
-            this.setState(bState);
-        }
-
-        private string body;
-        public string getBody()
-        {
-            return body;
-        }
-        public void setBody(string value)
-        {
-            body = value;
-        }
-
-        private string substitution;
-        public string getSubstitution()
-        {
-            return substitution;
-        }
-        public void setSubstitution(string value)
-        {
-            substitution = value;
-        }
-
-        private char poS;
-        public char getPoS()
-        {
-            return poS;
-        }
-        public void setPoS(char value)
-        {
-            poS = value;
-        }
-
-        private byte minLength;
-        public byte getMinLength()
-        {
-            return minLength;
-        }
-        public void setMinLength(byte value)
-        {
-            minLength = value;
-        }
-
-        private bool state;
-        public bool getState()
-        {
-            return state;
-        }
-        public void setState(bool value)
-        {
-            state = value;
+            this.Body = body;
+            this.Substitution = substitution;
+            this.PoS = poS;
+            this.MinLength = minLength;
+            this.State = state;
         }
     }
 }
